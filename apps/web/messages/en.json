@@ -1,0 +1,83 @@
+{
+  "brand": "Mawid Barbers",
+  "switchLocale": "العربية",
+  "home": {
+    "eyebrow": "Gentlemen's barbers",
+    "title": "Book your next visit",
+    "subtitle": "Pick a service, choose a time, and you're done. Your confirmation arrives on WhatsApp.",
+    "cta": "Book now",
+    "servicesTitle": "Our services",
+    "perks": [
+      "Instant WhatsApp confirmation",
+      "Pay with mada or Apple Pay",
+      "Reminder the day before"
+    ],
+    "minutes": "{n} min",
+    "deposit": "{amount} deposit to confirm",
+    "payAtShop": "Pay at the shop",
+    "book": "Book",
+    "apiDown": "We can't load services right now. Please try again in a minute."
+  },
+  "book": {
+    "back": "All services",
+    "chooseDay": "Choose a day",
+    "chooseTime": "Choose a time",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "loading": "Checking available times…",
+    "noSlots": "Fully booked or closed this day. Try another one.",
+    "yourDetails": "Your details",
+    "name": "Name",
+    "phone": "Mobile number",
+    "phoneHint": "We'll send the confirmation here on WhatsApp.",
+    "notes": "Anything we should know? (optional)",
+    "submit": "Confirm booking",
+    "submitPay": "Continue to payment · {amount}",
+    "submitting": "One moment…",
+    "taken": "Someone just took that time. Please pick another.",
+    "genericError": "Something went wrong. Please try again."
+  },
+  "booking": {
+    "PENDING_PAYMENT": "Waiting for payment",
+    "CONFIRMED": "You're booked!",
+    "CANCELLED": "This booking was cancelled",
+    "COMPLETED": "Thanks for visiting",
+    "NO_SHOW": "Marked as missed",
+    "checking": "Checking your payment…",
+    "holdNote": "We're holding this time for you for a few more minutes.",
+    "whatsappNote": "A confirmation is on its way to your WhatsApp.",
+    "mockPay": "Simulate payment (dev mode)",
+    "service": "Service",
+    "when": "When",
+    "bookAnother": "Book something else"
+  },
+  "admin": {
+    "title": "Dashboard",
+    "login": "Owner sign in",
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign in",
+    "wrongCreds": "Wrong email or password.",
+    "logout": "Sign out",
+    "today": "Today",
+    "upcoming": "Upcoming",
+    "weekDeposits": "Deposits this week",
+    "weekNoShows": "No-shows this week",
+    "noBookings": "No bookings on this day.",
+    "markDone": "Done",
+    "markNoShow": "No-show",
+    "cancel": "Cancel",
+    "confirmCancel": "Cancel this booking? The customer is not notified automatically.",
+    "paid": "Paid {amount}",
+    "status": {
+      "PENDING_PAYMENT": "Awaiting payment",
+      "CONFIRMED": "Confirmed",
+      "CANCELLED": "Cancelled",
+      "COMPLETED": "Completed",
+      "NO_SHOW": "No-show"
+    }
+  },
+  "footer": {
+    "tagline": "See you in the chair soon."
+  }
+}

@@ -1,0 +1,90 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum BookingStatus {
+  PENDING_PAYMENT
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+  NO_SHOW
+}
+
+enum PaymentStatus {
+  INITIATED
+  PAID
+  FAILED
+  REFUNDED
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+model Service {
+  id              String    @id @default(cuid())
+  nameEn          String
+  nameAr          String
+  descriptionEn   String?
+  descriptionAr   String?
+  durationMinutes Int
+  // All money is stored in halalas (1 SAR = 100) to avoid float surprises.
+  priceHalalas    Int
+  depositHalalas  Int       @default(0)
+  active          Boolean   @default(true)
+  sortOrder       Int       @default(0)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  bookings        Booking[]
+}
+
+/// One row per open day. A missing weekday means closed.
+model WorkingHours {
+  weekday     Int @id // 0 = Sunday ... 6 = Saturday
+  openMinute  Int // minutes from midnight, local business time
+  closeMinute Int
+}
+
+model Booking {
+  id             String        @id @default(cuid())
+  serviceId      String
+  service        Service       @relation(fields: [serviceId], references: [id])
+  customerName   String
+  customerPhone  String
+  locale         String        @default("ar")
+  notes          String?
+  startsAt       DateTime
+  endsAt         DateTime
+  status         BookingStatus @default(PENDING_PAYMENT)
+  // Unpaid bookings only block the slot until this time.
+  holdExpiresAt  DateTime?
+  reminderSentAt DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  payment        Payment?
+
+  @@index([startsAt])
+  @@index([status, startsAt])
+}
+
+model Payment {
+  id            String        @id @default(cuid())
+  bookingId     String        @unique
+  booking       Booking       @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  provider      String        @default("moyasar")
+  providerRef   String        @unique
+  amountHalalas Int
+  status        PaymentStatus @default(INITIATED)
+  paidAt        DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}

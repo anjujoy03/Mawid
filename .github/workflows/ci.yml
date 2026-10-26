@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: mawid
+          POSTGRES_PASSWORD: mawid
+          POSTGRES_DB: mawid_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U mawid"
+          --health-interval 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://mawid:mawid@localhost:5432/mawid_test
+      JWT_SECRET: ci-only-secret-that-is-long-enough-1234
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx prisma generate --schema apps/api/prisma/schema.prisma
+      - run: npx prisma migrate deploy --schema apps/api/prisma/schema.prisma
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
